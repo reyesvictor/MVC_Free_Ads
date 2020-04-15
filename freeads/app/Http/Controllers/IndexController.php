@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    //
-    public function showIndex() {
-        echo '<h1>IndexController/showIndex()<h1>';
+    public function index() {
+        return view('index');
+    }
+    public function home() {
+        return view('home');
     }
 }
+
+
+
