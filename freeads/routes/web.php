@@ -23,6 +23,7 @@ Route::get('profile', function () {
     // Only verified users may enter...
 })->middleware('verified');
 
+// Route::get('/home', 'IndexController@index')->name('home');
 Route::get('/', 'IndexController@index')->name('home');
-Route::get('/home', 'IndexController@index')->name('home');
 Route::get('/index', 'IndexController@index')->name('index');
+Route::get('/home', 'IndexController@index')->name('index');
