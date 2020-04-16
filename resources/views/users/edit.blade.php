@@ -65,15 +65,29 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Modify') }}
                                 </button>
-                                <button type="submit" class="btn btn-danger ">
-                                    {{ __('Delete') }}
-                                </button>
                             </div>
                         </div>
+                    </form>
                 </div>
+
+                <div class="card-header">{{ __('Delete my user account') }}</div>
+                <form method="post" action="{{route('users.delete')}}">
+                    @csrf
+                    {{ method_field('patch') }}
+                    <div class="form-group row mb-0">
+                        <div class="col-md-8 offset-md-4">
+                            <button type="submit" class="btn btn-danger ">
+                                {{ __('Delete') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                
             </div>
         </div>
     </div>
+</div>
 </div>
 </form>
 </div>

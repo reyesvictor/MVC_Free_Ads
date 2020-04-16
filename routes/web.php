@@ -56,5 +56,8 @@ Route::patch('users/{user}/update',  [
 ]);
 
 //DELETE
-
+Route::patch('users-edit/delete',  [
+    'as' => 'users.delete',
+    'uses' => 'UserController@delete'
+]);
 //===============================================================================

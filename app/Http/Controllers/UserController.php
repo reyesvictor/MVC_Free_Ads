@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 use App\User;
 
 
@@ -71,7 +72,9 @@ class UserController extends Controller
 
     public function delete()
     {
-        $user = Auth::user()->id;
-        $user = User::find($user);
+        $id = Auth::user()->id;
+        $users = User::findOrFail($id);
+        $users->delete();
+        return Redirect::route('index');
     }
 }
