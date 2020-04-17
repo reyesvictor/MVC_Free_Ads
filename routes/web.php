@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,35 +30,52 @@ Route::get('/index', 'IndexController@index')->name('index');
 
 //CRUD===========================================================================
 
-//CREATE
-Route::get('user-register', 'UserController@registerUser')->name('users.register');
-Route::get('user-register/create', 'UserController@create')->name('users.create');
 
-//READ
 
-//UPDATE
+
 //Les deux marchent--------------------------------------------------
 // Route::get('edit-page/',  [
 //     'as' => 'users.edit',
 //     'uses' => 'UserController@edit'
 // ])->middleware('verified');
-Route::get('edit-page', 'UserController@edit')->name('users.edit')->middleware('verified');
 //--------------------------------------------------------------------
 // Route::get('edit',  [
 //     'as' => 'users.edit',
 //     'uses' => 'UserController@edit'
 // ])->middleware('verified');
 
+//Users
+Route::group(['prefix' => 'user'], function () {
+    //CREATE
+    Route::get('register', 'UserController@registerUser')->name('users.register');
+    Route::get('register/create', 'UserController@create')->name('users.create');
+    //UPDATE
+    Route::get('edit', 'UserController@edit')
+        ->name('users.edit')
+        ->middleware('verified');
+    Route::post('edit',  [
+        'as' => 'users.update',
+        'uses' => 'UserController@update'
+    ]);
+    //DELETE
+    Route::patch('delete',  [
+        'as' => 'users.delete',
+        'uses' => 'UserController@delete'
+    ]);
+});
 
-//Modifier les données de l'utilisateur
-Route::patch('users/{user}/update',  [
-    'as' => 'users.update',
-    'uses' => 'UserController@update'
-]);
-
-//DELETE
-Route::patch('users-edit/delete',  [
-    'as' => 'users.delete',
-    'uses' => 'UserController@delete'
-]);
-//===============================================================================
+Route::group(['prefix' => 'annonce'], function () {
+    $name = 'annonce';
+    Route::get('', [
+        'as' => $name . '.index',
+        'uses' => 'AnnonceController@index',
+    ]);
+    Route::get('new', [
+        'as' => $name . '.new',
+        'uses' => 'AnnonceController@new',
+    ]);
+    Route::post('new', [
+        'as' => $name . '.create',
+        'uses' => 'AnnonceController@create',
+    ]);
+});

@@ -8,9 +8,14 @@
                 <div class="card-body">
                     <div class="card-header">{{ __('Modify My Information') }}</div>
 
-                    <form method="post" action="{{route('users.update', $user)}}">
+                    @if ( Session::has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('success') }}
+                    </div>
+                    @endif
+                    <form method="post" action="{{route('users.update')}}">
                         @csrf
-                        {{ method_field('patch') }}
+                        {{-- {{ method_field('patch') }} --}}
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
                             <div class="col-md-6">
@@ -83,7 +88,7 @@
                     </div>
                 </form>
 
-                
+
             </div>
         </div>
     </div>
