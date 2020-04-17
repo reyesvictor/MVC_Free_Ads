@@ -66,10 +66,19 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['prefix' => 'annonce'], function () {
     $name = 'annonce';
-    Route::get('', [
+    //READ
+    Route::get('show', [
+        'as' => $name . '.show',
+        'uses' => 'AnnonceController@show'
+    ]);
+    Route::get('/', [
         'as' => $name . '.index',
         'uses' => 'AnnonceController@index',
     ]);
+    Route::get('{id}', [
+        'as' => $name . '.getAnnonce',
+        'uses' => 'AnnonceController@getAnnonce'
+    ])->where('id', '[0-9]+');
     Route::get('new', [
         'as' => $name . '.new',
         'uses' => 'AnnonceController@new',
@@ -77,5 +86,22 @@ Route::group(['prefix' => 'annonce'], function () {
     Route::post('new', [
         'as' => $name . '.create',
         'uses' => 'AnnonceController@create',
+    ]);
+    //BTN
+    Route::get('edit', function() {
+        return view('annonce.index');
+    });
+    Route::patch('edit', [
+        'as' => $name . '.edit',
+        'uses' => 'AnnonceController@edit',
+    ]);
+    Route::post('edit', [
+        'as' => $name . '.update',
+        'uses' => 'AnnonceController@update',
+    ]);
+    // Delete
+    Route::post('delete', [
+        'as' => $name . '.delete',
+        'uses' => 'AnnonceController@destroy',
     ]);
 });

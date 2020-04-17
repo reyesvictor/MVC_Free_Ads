@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Annonce;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AnnonceController extends Controller
@@ -29,17 +30,19 @@ class AnnonceController extends Controller
      */
     public function create(Request $request)
     {
-        // var_dump($request->titre);
-        // var_dump($request->description);
-        // var_dump($request->prix);
-        // var_dump(request()->titre);
-        // var_dump(request()->description);
-        // var_dump(request()->prix);
         $this->validate(request(), [
             'titre' => 'required|min:5',
             'description' => 'required|min:10',
             'prix' => 'required'
         ]);
+
+        $annonce = new Annonce([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'prix' => $request->prix,
+            'user_id' => Auth::id(),
+        ]);
+        $annonce->save();
         return redirect()
             ->route('annonce.new')
             ->with('success', 'Your annonce has been created.');
@@ -64,8 +67,16 @@ class AnnonceController extends Controller
      */
     public function show(Annonce $annonce)
     {
-        //
+        $annonces = Annonce::all();
+        return view('annonce.show', ['annonces' => $annonces]);
     }
+
+    public function getAnnonce($id)
+    {
+        $annonce = Annonce::find($id);
+        return view('annonce.show', ['annonce' => $annonce]);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -73,9 +84,10 @@ class AnnonceController extends Controller
      * @param  \App\Annonce  $annonce
      * @return \Illuminate\Http\Response
      */
-    public function edit(Annonce $annonce)
+    public function edit(Annonce $annonce, Request $request)
     {
-        //
+        $annonce = Annonce::find($request->annonce_id);
+        return view('annonce.edit', ['annonce' => $annonce]);
     }
 
     /**
@@ -87,7 +99,30 @@ class AnnonceController extends Controller
      */
     public function update(Request $request, Annonce $annonce)
     {
-        //
+        $this->validate(request(), [
+            'titre' => 'required|min:5',
+            'description' => 'required|min:10',
+            'prix' => 'required'
+        ]);
+
+        // $annonce = new Annonce([
+        //     'titre' => $request->titre,
+        //     'description' => $request->description,
+        //     'prix' => $request->prix,
+        //     'user_id' => Auth::id(),
+        // ]);
+
+        // dd($request->annonce_id);
+
+        $annonce = Annonce::find($request->annonce_id);
+        $annonce->titre = $request->titre;
+        $annonce->description = $request->description;
+        $annonce->prix = $request->prix;
+        $annonce->save();
+
+        return redirect()
+            ->route('annonce.show')
+            ->with('update', 'Your annonce has been updated.');
     }
 
     /**
@@ -98,6 +133,6 @@ class AnnonceController extends Controller
      */
     public function destroy(Annonce $annonce)
     {
-        //
+        return view('annonce.index');
     }
 }
