@@ -14,6 +14,12 @@
       </div>
       @endif
 
+      @if(Session::has('delete'))
+      <div class="alert alert-danger mt-3" role="alert">
+        {{ Session::get('delete') }}
+      </div>
+      @endif
+
       @if(isset($annonces))
       @foreach( $annonces as $annonce)
       <div class="card">

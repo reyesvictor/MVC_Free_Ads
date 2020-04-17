@@ -131,8 +131,12 @@ class AnnonceController extends Controller
      * @param  \App\Annonce  $annonce
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Annonce $annonce)
+    public function destroy(Annonce $annonce, Request $request)
     {
-        return view('annonce.index');
+        $annonce = Annonce::find($request->annonce_id);
+        $annonce->delete();
+        return redirect()
+            ->route('annonce.show')
+            ->with('delete', 'Your annonce has been deleted.');
     }
 }
