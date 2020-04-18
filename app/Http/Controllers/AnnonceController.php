@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Photo;
 use App\Annonce;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -93,7 +93,7 @@ class AnnonceController extends Controller
     public function show(Annonce $annonce)
     {
         // $annonces = Annonce::all();
-        $annonces = Annonce::with(['photos'])->orderBy('id', 'desc')->paginate(3);
+        $annonces = Annonce::with(['photos'])->paginate(3);
         // dd($annonces);
         // $annonces = Annonce::paginate(2);
         // $images = Photo::all();

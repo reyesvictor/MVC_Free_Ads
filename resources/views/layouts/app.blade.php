@@ -61,15 +61,15 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 {{-- Menu Items --}}
-                                {{-- Rendre le numero de l'utilisateur en variable --}}
+                                {{-- messages --}}
+                                <a class="dropdown-item" href="{{ route('message.index') }}">
+                                    {{ __('Messagerie') }} {{ App\Http\Controllers\MessageController::notif() }}
+                                </a>
+                                {{-- end messages --}}
+
                                 <a class="dropdown-item" href="{{ route('users.edit') }}">
                                     {{ __('Edit Profile') }}
                                 </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
-                                    @csrf
-                                </form>
                                 {{-- end edit profile item --}}
 
                                 {{-- logout begin --}}

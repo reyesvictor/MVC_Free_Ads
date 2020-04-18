@@ -121,3 +121,27 @@ Route::group(['prefix' => 'annonce'], function () {
         'uses' => 'AnnonceController@destroy',
     ]);
 });
+
+
+Route::group(['prefix' => 'messagerie'], function () {
+    Route::get('', [
+        'as' => 'message.index',
+        'uses' => 'MessageController@index',
+    ]);
+    Route::get('new', [
+        'as' => 'message.new',
+        'uses' => 'MessageController@new',
+    ]);
+    Route::post('new', [
+        'as' => 'message.create',
+        'uses' => 'MessageController@create',
+    ]);
+    Route::get('inbox', [
+        'as' => 'message.inbox',
+        'uses' => 'MessageController@inbox',
+    ]);
+    Route::post('read', [
+        'as' => 'message.read',
+        'uses' => 'MessageController@read',
+    ]);
+});

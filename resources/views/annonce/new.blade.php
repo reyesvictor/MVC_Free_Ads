@@ -6,7 +6,13 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-body">
-          <div class="card-header">{{ __('Create new annonce') }}</div>
+          <div class="card-header">
+            <span>{{ __('Create new annonce') }}</span>
+            <a class="btn btn-info float-right mr-2" href="{{ route('annonce.mylist') }}" role="button">See All Mine</a>
+            <a class="btn btn-info float-right mr-2" href="{{ route('annonce.new') }}" role="button">Create new</a>
+            <a class="btn btn-info float-right mr-2" href="{{ route('annonce.latest') }}" role="button">3 Most Recent</a>
+          </div>
+          
           @if ( Session::has('success'))
           <br>
           <div class="alert alert-success" role="alert">

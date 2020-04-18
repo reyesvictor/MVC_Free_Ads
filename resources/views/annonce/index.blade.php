@@ -1,24 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+
+<br>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Annonces') }}</div>
-                <div class="card-body">
-                    @if( Auth::check() )
-                    <a class="btn btn-primary btn-lg btn-block" href="{{ route('annonce.new') }}"
-                    role="button">Create new annonce</a>
-                    <a class="btn btn-primary btn-lg btn-block" href="{{ route('annonce.mylist') }}"
-                        role="button">My annonces</a>
-                    @endif
-                    <a class="btn btn-primary btn-lg btn-block" href="{{ route('annonce.show') }}" role="button">See all annonces</a>
-                </div>
+            @include('includes.annoncecard')
+            <br>
+            @if(App\Http\Controllers\MessageController::notif() != null)
+            <div class="alert alert-success" role="alert">
+                You have {{ App\Http\Controllers\MessageController::notif() }} new messages !
             </div>
+            @endif
+            @include('includes.messageriecard')
         </div>
-        </form>
     </div>
+    </form>
+</div>
 </div>
 </div>
 </div>
