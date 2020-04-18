@@ -13,6 +13,7 @@
           @if(Auth::check())
           <a class="btn btn-info float-right" href="{{ route('annonce.mylist') }}" role="button">See All Mine</a>
           <a class="btn btn-info float-right" href="{{ route('annonce.new') }}" role="button">Create new</a>
+          <a class="btn btn-info float-right" href="{{ route('annonce.latest') }}" role="button">3 Most Recent</a>
           @endif
         </div>
       </div>

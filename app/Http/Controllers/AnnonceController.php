@@ -93,7 +93,7 @@ class AnnonceController extends Controller
     public function show(Annonce $annonce)
     {
         // $annonces = Annonce::all();
-        $annonces = Annonce::with(['photos'])->paginate(3);
+        $annonces = Annonce::with(['photos'])->orderBy('id', 'desc')->paginate(3);
         // dd($annonces);
         // $annonces = Annonce::paginate(2);
         // $images = Photo::all();
@@ -187,9 +187,7 @@ class AnnonceController extends Controller
             'prix' => 'required'
         ]), function () {
             if (request()->hasFile('image')) {
-                // dd(request()->image);
                 request()->validate([
-                    // 'image' => 'file|image|max:3000'
                     'image' => 'required',
                     'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
                 ]);
@@ -210,31 +208,39 @@ class AnnonceController extends Controller
 
         if ($request->prix != '') {
             $this->prix = $request->prix;
-            // dd( $arr[$prix][0]);
         }
-        
+
         $annonces = Annonce::where(function ($query) {
             $query->where('prix', '>', intval($this->arr[$this->prix][0]))
-            ->where('prix', '<', intval($this->arr[$this->prix][1]));
+                ->where('prix', '<', intval($this->arr[$this->prix][1]));
         })->where(function ($query) {
             $query->where('titre', 'like', "%$this->s%")
-            ->orWhere('description', 'like', "%$this->s%");
+                ->orWhere('description', 'like', "%$this->s%");
         })->get();
-
-        // request()->validate(['s' => 'required']);
 
         return view('annonce.show', ['annonces' => $annonces]);
     }
 
-    public function getUserList(){
-        if(Auth::check()){
-
+    public function getUserList()
+    {
+        if (Auth::check()) {
             $annonces = Annonce::where('user_id', Auth::id())->get();
-
             return view('annonce.mylist')->with('annonces', $annonces);
-        }else {
+        } else {
             return redirect()
-            ->route('annonce.show');
+                ->route('annonce.show');
+        }
+    }
+
+
+    public function getThreeLatestList()
+    {
+        if (Auth::check()) {
+            $annonces = Annonce::orderBy('id', 'desc')->get()->take(3);
+            return view('annonce.show')->with('annonces', $annonces);
+        } else {
+            return redirect()
+                ->route('annonce.show');
         }
     }
 }

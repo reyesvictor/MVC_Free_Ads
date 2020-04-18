@@ -91,6 +91,10 @@ Route::group(['prefix' => 'annonce'], function () {
         'as' => $name . '.new',
         'uses' => 'AnnonceController@new',
     ]);
+    Route::get('latest', [
+        'as' => $name . '.latest',
+        'uses' => 'AnnonceController@getThreeLatestList',
+    ]);
     // Route::post('new', [
     //     'as' => $name . '.create',
     //     'uses' => 'AnnonceController@create',
