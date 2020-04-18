@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Like;
 use App\Annonce;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AnnonceController extends Controller
 {
+    public function photos()
+    {
+        return $this->hasMany('App\Photo');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -67,7 +72,8 @@ class AnnonceController extends Controller
      */
     public function show(Annonce $annonce)
     {
-        $annonces = Annonce::all();
+        // $annonces = Annonce::all();
+        $annonces = Annonce::paginate(2);
         return view('annonce.show', ['annonces' => $annonces]);
     }
 

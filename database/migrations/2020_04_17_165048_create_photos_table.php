@@ -16,7 +16,11 @@ class CreatePhotosTable extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-
+            $table->bigInteger('annonce_id')->unsigned();
+            $table->foreign('annonce_id')
+            ->references('id')
+            ->on('annonces')
+            ->onDelete('cascade');
         });
     }
 

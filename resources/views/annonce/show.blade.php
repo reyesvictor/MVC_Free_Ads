@@ -53,10 +53,15 @@
               </button>
             </form>
 
+            @endif
           </div>
-          @endif
         </div>
       </div>
+      <div class="card-footer text-muted">
+        Created {{ $annonce->created_at->format('d-m-y H:i') }}
+        and Updated {{ $annonce->updated_at->format('d-m-y H:i') }}
+      </div>
+      <br>
       @endforeach
 
       @elseif (isset($annonce))
@@ -65,8 +70,8 @@
         <div class="card-body">
           <p>{{ $annonce->description }}</p>
           <p>{{ $annonce->prix }} € </p>
+          @if( $annonce->user_id == Auth::id())
           <div class="d-flex flex-row bd-highlight mb-3">
-            @if( $annonce->user_id == Auth::id())
             {{-- <a class="btn btn-info" href="{{ route('annonce.edit', $annonce->id) }}"
             role="button">Edit</a> --}}
 
@@ -92,16 +97,25 @@
           @endif
         </div>
       </div>
-    </div>
+      <div class="card-footer text-muted">
+        Created {{ $annonce->created_at->format('d-m-y H:i') }}
+        and Updated {{ $annonce->updated_at->format('d-m-y H:i') }}
+      </div>
+      
+      @else
+      <div class="card">
+        <div class="card-header">This annonce doesnt exist</div>
+      </div>
+      @endif
 
-    @else
-    <div class="card">
-      <div class="card-header">This annonce doesnt exist</div>
+      {{-- Pagination --}}
+        <div class="d-flex justify-content-center">
+          {{ $annonces->links() }}
+        </div>
+    
     </div>
-    @endif
-
   </div>
-  </form>
 </div>
-</div>
+
+
 @endsection
