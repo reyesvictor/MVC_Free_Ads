@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
-    protected $fillable = ['path', 'annonce_id'];
-    
+    // protected $fillable = ['path', 'annonce_id'];
+    public $timestamps = false;
+    protected $guarded = [];
+
     public function annonce()
     {
-        return $this->belongsTo('App\Annonce');
+        return $this->belongsTo(Annonce::class);
     }
  
 }

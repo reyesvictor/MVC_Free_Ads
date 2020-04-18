@@ -83,7 +83,11 @@ Route::group(['prefix' => 'annonce'], function () {
         'as' => $name . '.new',
         'uses' => 'AnnonceController@new',
     ]);
-    Route::post('new', [
+    // Route::post('new', [
+    //     'as' => $name . '.create',
+    //     'uses' => 'AnnonceController@create',
+    // ]);
+    Route::patch('new', [
         'as' => $name . '.create',
         'uses' => 'AnnonceController@create',
     ]);

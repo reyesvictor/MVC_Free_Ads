@@ -9,7 +9,7 @@
           <div class="card-header">{{ __('Edit my annonce') }}</div>
 
           <br>
-          <form method="post" action="{{route('annonce.update')}}">
+          <form method="post" action="{{route('annonce.update')}}" enctype="multipart/form-data">
             @csrf
             {{-- {{ method_field('patch') }} --}}
 
@@ -52,6 +52,14 @@
             </div>
 
             <input id="annonce_id" name="annonce_id" type="hidden" value="{{ $annonce->id }}">
+
+
+            <div class="form-group row">
+              <label for="image" class="col-md-4 col-form-label text-md-right">Photos</label>
+              <input type="file" name="image[]" multiple>
+              <div class="col-md-6">{{ $errors->first('image') }}</div>
+            </div>
+
 
             <div class="form-group row mb-0">
               <div class="col-md-8 offset-md-4">

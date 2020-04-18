@@ -11,7 +11,7 @@ class Annonce extends Model
 
     public function photos()
     {
-        return $this->hasMany('App\Photo');
+        return $this->hasMany(Photo::class);
     }
 
     public function getTitreAttribute($value)
