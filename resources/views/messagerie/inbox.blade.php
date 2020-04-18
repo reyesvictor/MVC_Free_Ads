@@ -37,12 +37,13 @@
             </form>
           </div>
           @endif
-          
+
           <br>
           <footer class="blockquote-footer">Écrit à {{ $message->created_at }}<cite title="Source Title">par
               {{ $message->name }}</cite></footer>
         </div>
       </div>
+      <br>
       @endforeach
       @endif
 

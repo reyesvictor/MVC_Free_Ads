@@ -17,6 +17,8 @@
           @endif
         </div>
       </div>
+      <br>
+
 
       <div class="card">
         <div class="card-header">
@@ -47,6 +49,8 @@
           </form>
         </div>
       </div>
+      <br>
+
 
       @if(Session::has('update'))
       <div class="alert alert-info" role="alert">
