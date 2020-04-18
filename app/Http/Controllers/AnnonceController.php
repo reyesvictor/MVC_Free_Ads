@@ -68,7 +68,7 @@ class AnnonceController extends Controller
         if (request()->has('image')) {
             // dd(request()->all());
             $annonce = Annonce::where('id', $id)->first();
-            if ( is_array(request()->image)) {
+            if (is_array(request()->image)) {
                 foreach (request()->image as $image) {
                     $photo = new Photo([
                         'path' => $image->store('photos', 'public')
@@ -80,7 +80,6 @@ class AnnonceController extends Controller
                     'path' => request()->image->store('photos', 'public')
                 ]);
                 $annonce->photos()->save($photo);
-
             }
             // dd($annonce);
         }
@@ -196,5 +195,38 @@ class AnnonceController extends Controller
                 ]);
             }
         });
+    }
+
+    public function search(Request $request)
+    {
+        $this->s = '';
+        $this->arr = [['0', '1000000'], ['0', '100'], ['100', '300'], ['300', '1000000']];
+        if ($request->s != '') {
+            $this->s = $request->s;
+            // $annonces = Annonce::where('titre', 'like', "%$s%")
+            //     ->orWhere('description', 'like', "%$s%")
+            //     ->paginate(3);
+        }
+
+        if ($request->prix != '') {
+            $this->prix = $request->prix;
+            // dd( $arr[$prix][0]);
+        }
+        
+        $annonces = Annonce::where(function ($query) {
+            $query->where('prix', '>', intval($this->arr[$this->prix][0]))
+            ->where('prix', '<', intval($this->arr[$this->prix][1]));
+        })->where(function ($query) {
+            $query->where('titre', 'like', "%$this->s%")
+            ->orWhere('description', 'like', "%$this->s%");
+        })->get();
+
+        // request()->validate(['s' => 'required']);
+
+        return view('annonce.show', ['annonces' => $annonces]);
+    }
+
+    public function getUserList(){
+        
     }
 }

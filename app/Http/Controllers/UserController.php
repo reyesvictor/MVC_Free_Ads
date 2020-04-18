@@ -14,14 +14,14 @@ class UserController extends Controller
 
     public function __construct()
     {
-        if ( Route::getCurrentRoute()->getActionName() == 'registerUser' ) {
+        if (Route::getCurrentRoute()->getActionName() == 'registerUser') {
             $this->middleware('auth');
         }
     }
 
     public function registerUser()
     {
-        if ( Auth::check() ) {
+        if (Auth::check()) {
             return view('index');
         } else {
             return view('auth.register');
@@ -48,47 +48,31 @@ class UserController extends Controller
         //CETTE LIGNE
         $user = Auth::user();
         $emailstored = Auth::user()->email;
-        if (Auth::user()->email == request('email')) {
-            // $this->validate(request(), [
-            //     'id' => Auth::user()->id,
-            //     'name' => 'required',
-            //     //  'email' => 'required|email|unique:users',
-            //     'password' => 'required|min:6|confirmed'
-            // ]);
-            // $user->name = request('name');
-            // // $user->email = request('email');
-            // $user->password = bcrypt(request('password'));
-            // $user->save();
-            // if ( $emailstored !== $user->email ) {
-            //     return redirect()
-            //     ->route('users.edit')
-            //     ->with('success', 'Your user email has been updated:' . $user->email);
-            // } else {
-            //     return redirect()
-            //     ->route('users.edit')
-            //     ->with('success', 'Your information has been updated');
-            // }
-            // return back();
+
+        if (Auth::user()->email == request()->email) {
+            $this->validate(request(), [
+                'name' => 'required',
+                'password' => 'required|min:6|confirmed'
+            ]);
         } else {
             $this->validate(request(), [
                 'name' => 'required',
-                'email' => 'required|email|unique:users',
+                'email' => 'email|unique:users',
                 'password' => 'required|min:6|confirmed'
-                ]);
-                $user->name = request('name');
-                $user->email = request('email');
-                $user->password = bcrypt(request('password'));
-                $user->save();
-                if ( $emailstored !== $user->email ) {
-                    return redirect()
-                    ->route('users.edit')
-                    ->with('success', 'Your user email has been updated:' . $user->email);
-                } else {
-                    return redirect()
-                    ->route('users.edit')
-                    ->with('success', 'Your information has been updated');
-                }
-            // return back();
+            ]);
+        }
+        $user->name = request('name');
+        $user->email = request('email');
+        $user->password = bcrypt(request('password'));
+        $user->save();
+        if ($emailstored !== $user->email) {
+            return redirect()
+                ->route('users.edit')
+                ->with('success', 'Your user email has been updated: ' . $user->email);
+        } else {
+            return redirect()
+                ->route('users.edit')
+                ->with('success', 'Your information has been updated');
         }
     }
 
@@ -98,6 +82,6 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         $users->delete();
         return Redirect::route('index')
-        ->with('delete', 'Your account has been deleted.');
+            ->with('delete', 'Your account has been deleted.');
     }
 }

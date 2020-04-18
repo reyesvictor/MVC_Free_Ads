@@ -4,13 +4,46 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-8">
+
       <div class="card">
         <div class="card-header">
-
-          {{ __('Annonces') }}
+          <a class='stretched-link' href="{{ route('annonce.show') }}">
+            {{ __('Annonces') }}
+          </a>
           @if(Auth::check())
+          <a class="btn btn-info float-right" href="{{ route('annonce.mylist') }}" role="button">Create new</a>
           <a class="btn btn-info float-right" href="{{ route('annonce.new') }}" role="button">Create new</a>
           @endif
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          {{ __('Search an annonce') }}
+          <br><br>
+          <form action="{{route('annonce.search')}}">
+            {{-- @csrf --}}
+            <div class="form-group row">
+              <div class="col-md-6">
+                <select name="prix" clas='browser-default custom-select'>
+                  <option value='0' selected>--Price option--</option>
+                  <option value="1">Under 100</option>
+                  <option value="2">100 - 300</option>
+                  <option value="3">300 - ...</option>
+              </select>
+              <br><br>
+                <input id="search" type="text" class="form-control @error('search') is-invalid @enderror" name="s"
+                  value="{{ old('search') }}" autocomplete="search" autofocus placeholder="search">
+                @error('search')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror </div>
+            </div>
+            <button type="submit" class="btn btn-info mr-3">
+              {{ __('Search') }}
+            </button>
+          </form>
         </div>
       </div>
 
@@ -70,8 +103,8 @@
         </div>
       </div>
       <div class="card-footer text-muted">
-        {{-- Created {{ $annonce->created_at->format('d-m-y H:i') }}
-        and Updated {{ $annonce->updated_at->format('d-m-y H:i') }} --}}
+        Created {{ $annonce->created_at->format('d-m-y H:i') }}
+        and Updated {{ $annonce->updated_at->format('d-m-y H:i') }}
       </div>
       <br>
 
@@ -126,9 +159,9 @@
 
       {{-- Pagination --}}
       <div class="d-flex justify-content-center">
-        @if (isset($annonces))
+        @if (isset($annonces) && $annonces instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {{ $annonces->links() }}
-        @elseif (isset($annonce))
+        @elseif (isset($annonce) && $annonce instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {{ $annonce->links() }}
         @endif
       </div>

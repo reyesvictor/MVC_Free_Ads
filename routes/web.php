@@ -67,6 +67,14 @@ Route::group(['prefix' => 'user'], function () {
 Route::group(['prefix' => 'annonce'], function () {
     $name = 'annonce';
     //READ
+    Route::get('search', [
+        'as' => $name . '.search',
+        'uses' => 'AnnonceController@search'
+    ]);
+    Route::get('mylist', [
+        'as' => $name . '.mylist',
+        'uses' => 'AnnonceController@getUserList'
+    ]);
     Route::get('show', [
         'as' => $name . '.show',
         'uses' => 'AnnonceController@show'
