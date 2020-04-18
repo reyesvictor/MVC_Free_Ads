@@ -8,42 +8,11 @@
       <div class="card">
         <div class="card-header">
           <a class='float-left w-25 p-3' href="{{ route('annonce.show') }}">
-            Annonces
+            Retour aux Annonces
           </a>
           @if(Auth::check())
-          <a class="btn btn-info float-right" href="{{ route('annonce.mylist') }}" role="button">See All Mine</a>
           <a class="btn btn-info float-right" href="{{ route('annonce.new') }}" role="button">Create new</a>
           @endif
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          {{ __('Search an annonce') }}
-          <br><br>
-          <form action="{{route('annonce.search')}}">
-            {{-- @csrf --}}
-            <div class="form-group row">
-              <div class="col-md-6">
-                <select name="prix" clas='browser-default custom-select'>
-                  <option value='0' selected>--Price option--</option>
-                  <option value="1">Under 100</option>
-                  <option value="2">100 - 300</option>
-                  <option value="3">300 - ...</option>
-              </select>
-              <br><br>
-                <input id="search" type="text" class="form-control @error('search') is-invalid @enderror" name="s"
-                  value="{{ old('search') }}" autocomplete="search" autofocus placeholder="search">
-                @error('search')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror </div>
-            </div>
-            <button type="submit" class="btn btn-info mr-3">
-              {{ __('Search') }}
-            </button>
-          </form>
         </div>
       </div>
 

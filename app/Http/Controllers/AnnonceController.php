@@ -227,6 +227,14 @@ class AnnonceController extends Controller
     }
 
     public function getUserList(){
-        
+        if(Auth::check()){
+
+            $annonces = Annonce::where('user_id', Auth::id())->get();
+
+            return view('annonce.mylist')->with('annonces', $annonces);
+        }else {
+            return redirect()
+            ->route('annonce.show');
+        }
     }
 }
